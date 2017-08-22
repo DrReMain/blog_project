@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
@@ -19,7 +20,7 @@ class User(AbstractUser):
         verbose_name_plural = verbose_name
         ordering = ['-id']
 
-    def __str__(self):
+    def __unicode__(self):
         return self.username
 
 
@@ -31,7 +32,7 @@ class Tag(models.Model):
         verbose_name = '标签'
         verbose_name_plural = verbose_name
 
-    def __str__(self):
+    def __unicode__(self):
         return self.name
 
 
@@ -45,7 +46,7 @@ class Category(models.Model):
         verbose_name_plural = verbose_name
         ordering = ['index', 'id']
 
-    def __str__(self):
+    def __unicode__(self):
         return self.name
 
 
@@ -82,7 +83,7 @@ class Article(models.Model):
         verbose_name_plural = verbose_name
         ordering = ['-date_publish']
 
-    def __str__(self):
+    def __unicode__(self):
         return self.title
 
 
@@ -101,7 +102,7 @@ class Comment(models.Model):
         verbose_name = '评论'
         verbose_name_plural = verbose_name
 
-    def __str__(self):
+    def __unicode__(self):
         return str(self.id)
 
 
@@ -118,7 +119,7 @@ class Links(models.Model):
         verbose_name_plural = verbose_name
         ordering = ['index', 'id']
 
-    def __str__(self):
+    def __unicode__(self):
         return self.title
 
 
@@ -136,5 +137,5 @@ class Ad(models.Model):
         verbose_name_plural = verbose_name
         ordering = ['index', 'id']
 
-    def __str__(self):
+    def __unicode__(self):
         return self.title

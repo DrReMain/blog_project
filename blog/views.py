@@ -2,6 +2,7 @@ import logging
 from django.shortcuts import render
 from django.conf import settings
 from django.core.paginator import Paginator, InvalidPage, EmptyPage, PageNotAnInteger
+from django.db import connection
 from .models import *
 
 logger = logging.getLogger('blog.views')
@@ -30,12 +31,25 @@ def index(request):
 
         # 最新文章数据
         article_list = Article.objects.all()
-        paginator = Paginator(article_list, 10)
+        paginator = Paginator(article_list, 2)
         try:
             page = int(request.GET.get('page', 1))
             article_list = paginator.page(page)
         except (EmptyPage, PageNotAnInteger, InvalidPage):
             article_list = paginator.page(1)
+        # 文章归档
+        # 1.
+        # archive_list = Article.objects.raw(
+        #     'SELECT id, DATE_FORMAT(date_publish, "%%Y-%%m") as col_date FROM blog_article ORDER BY date_publish')
+        # for article in article_list:
+        #     print(article)
+        # 2.
+        # cursor = connection.cursor()
+        # cursor.execute(
+        #     "SELECT DISTINCT DATE_FORMAT(date_publish, '%Y-%m') as col_date FROM blog_article ORDER BY date_publish")
+        # row = cursor.fetchall()
+        # print(row)
+        pass
     except Exception as e:
         logger.error(e)
 
